@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import { defineField, defineType } from 'sanity'
 
 export default defineType({
   name: 'post',
@@ -23,7 +23,7 @@ export default defineType({
       name: 'author',
       title: 'Author',
       type: 'reference',
-      to: {type: 'author'},
+      to: { type: 'author' },
     }),
     defineField({
       name: 'mainImage',
@@ -37,17 +37,71 @@ export default defineType({
       name: 'categories',
       title: 'Categories',
       type: 'array',
-      of: [{type: 'reference', to: {type: 'category'}}],
+      of: [{ type: 'reference', to: { type: 'category' } }],
     }),
     defineField({
       name: 'publishedAt',
       title: 'Published at',
       type: 'datetime',
     }),
+    {
+      name: 'metadesc',
+      type: 'string',
+      title: 'Meta Description'
+  },
+    {
+      name: 'content',
+      title: 'Content',
+      type: 'array',
+      of: [
+        {
+          type: 'block'
+        },
+        {
+          type: 'image',
+          fields: [
+            {
+              type: 'text',
+              name: 'alt',
+              title: 'Alternative text',
+              description: `Some of your visitors cannot see images, 
+                be they blind, color-blind, low-sighted; 
+                alternative text is of great help for those 
+                people that can rely on it to have a good idea of 
+                what\'s on your page.`,
+              options: {
+                isHighlighted: true
+              }
+            }
+          ]
+        }
+      ]
+    },
     defineField({
-      name: 'body',
-      title: 'Body',
-      type: 'blockContent',
+      name: 'meta',
+      title: 'Meta Information',
+      type: 'array',
+      of: [
+        {
+          type: "object",
+          fields: [
+            {
+              name: 'title',
+              title: 'Meta Title',
+              type: 'string',
+              description: 'Title for SEO/meta purposes',
+            },
+            {
+              name: 'description',
+              title: 'Meta Description',
+              type: 'text',
+              description: 'Description for SEO/meta purposes',
+            },
+            // Add other meta fields as needed (keywords, etc.)
+          ],
+        }
+      ]
+
     }),
   ],
 
@@ -58,8 +112,8 @@ export default defineType({
       media: 'mainImage',
     },
     prepare(selection) {
-      const {author} = selection
-      return {...selection, subtitle: author && `by ${author}`}
+      const { author } = selection
+      return { ...selection, subtitle: author && `by ${author}` }
     },
   },
 })
