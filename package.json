@@ -1,7 +1,8 @@
 {
-  "name": "webrain",
+  "name": "webrain-backend",
   "private": true,
   "version": "1.0.0",
+  "description": "Sanity Content Studio (CMS) powering the Webrain agency website",
   "main": "package.json",
   "license": "UNLICENSED",
   "scripts": {
@@ -9,11 +10,32 @@
     "start": "sanity start",
     "build": "sanity build",
     "deploy": "sanity deploy",
-    "deploy-graphql": "sanity graphql deploy"
+    "deploy-graphql": "sanity graphql deploy",
+    "lint": "eslint . --ext .js",
+    "lint:fix": "eslint . --ext .js --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "node --test tests/**/*.test.mjs"
   },
   "keywords": [
-    "sanity"
+    "sanity",
+    "cms",
+    "webrain",
+    "headless-cms",
+    "content-studio"
   ],
+  "author": "Sohanur Rahman",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sohan9542/webrain-backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sohan9542/webrain-backend/issues"
+  },
+  "homepage": "https://webbrain.vercel.app",
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
     "@sanity/vision": "^3.20.2",
     "react": "^18.2.0",

@@ -1,0 +1,10 @@
+node_modules
+dist
+.sanity
+coverage
+yarn.lock
+package-lock.json
+.env
+.env.*
+!.env.example
+*.md.bak
