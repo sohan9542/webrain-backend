@@ -1,5 +1,11 @@
-import { defineField, defineType } from 'sanity'
+import {defineField, defineType} from 'sanity'
 
+/**
+ * Blog posts for the Webrain site.
+ * Field names (`metadesc`, `content`, `meta`) match frontend GROQ queries.
+ *
+ * @type {import('sanity').SchemaTypeDefinition}
+ */
 export default defineType({
   name: 'post',
   title: 'Post',
@@ -9,6 +15,7 @@ export default defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'slug',
@@ -18,12 +25,13 @@ export default defineType({
         source: 'title',
         maxLength: 96,
       },
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'author',
       title: 'Author',
       type: 'reference',
-      to: { type: 'author' },
+      to: {type: 'author'},
     }),
     defineField({
       name: 'mainImage',
@@ -37,26 +45,24 @@ export default defineType({
       name: 'categories',
       title: 'Categories',
       type: 'array',
-      of: [{ type: 'reference', to: { type: 'category' } }],
+      of: [{type: 'reference', to: {type: 'category'}}],
     }),
     defineField({
       name: 'publishedAt',
       title: 'Published at',
       type: 'datetime',
     }),
-    {
+    defineField({
       name: 'metadesc',
+      title: 'Meta Description',
       type: 'string',
-      title: 'Meta Description'
-  },
-    {
+    }),
+    defineField({
       name: 'content',
       title: 'Content',
       type: 'array',
       of: [
-        {
-          type: 'block'
-        },
+        {type: 'block'},
         {
           type: 'image',
           fields: [
@@ -64,26 +70,23 @@ export default defineType({
               type: 'text',
               name: 'alt',
               title: 'Alternative text',
-              description: `Some of your visitors cannot see images, 
-                be they blind, color-blind, low-sighted; 
-                alternative text is of great help for those 
-                people that can rely on it to have a good idea of 
-                what\'s on your page.`,
+              description:
+                'Describe the image for visitors who cannot see it (accessibility / SEO).',
               options: {
-                isHighlighted: true
-              }
-            }
-          ]
-        }
-      ]
-    },
+                isHighlighted: true,
+              },
+            },
+          ],
+        },
+      ],
+    }),
     defineField({
       name: 'meta',
       title: 'Meta Information',
       type: 'array',
       of: [
         {
-          type: "object",
+          type: 'object',
           fields: [
             {
               name: 'title',
@@ -97,14 +100,11 @@ export default defineType({
               type: 'text',
               description: 'Description for SEO/meta purposes',
             },
-            // Add other meta fields as needed (keywords, etc.)
           ],
-        }
-      ]
-
+        },
+      ],
     }),
   ],
-
   preview: {
     select: {
       title: 'title',
@@ -112,8 +112,8 @@ export default defineType({
       media: 'mainImage',
     },
     prepare(selection) {
-      const { author } = selection
-      return { ...selection, subtitle: author && `by ${author}` }
+      const {author} = selection
+      return {...selection, subtitle: author && `by ${author}`}
     },
   },
 })

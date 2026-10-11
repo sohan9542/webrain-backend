@@ -1,5 +1,10 @@
 import {defineField, defineType} from 'sanity'
 
+/**
+ * Blog post categories.
+ *
+ * @type {import('sanity').SchemaTypeDefinition}
+ */
 export default defineType({
   name: 'category',
   title: 'Category',
@@ -9,6 +14,7 @@ export default defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'description',
