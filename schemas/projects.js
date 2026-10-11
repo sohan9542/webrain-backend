@@ -1,5 +1,11 @@
 import {defineField, defineType} from 'sanity'
 
+/**
+ * Portfolio projects for the Webrain agency site.
+ * Type name is `projects` (plural) to match existing documents and GROQ queries.
+ *
+ * @type {import('sanity').SchemaTypeDefinition}
+ */
 export default defineType({
   name: 'projects',
   title: 'Projects',
@@ -9,6 +15,7 @@ export default defineType({
       name: 'name',
       title: 'Project Name',
       type: 'string',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'mainImage',
@@ -23,20 +30,27 @@ export default defineType({
       title: 'Published at',
       type: 'datetime',
     }),
-    {
+    defineField({
       name: 'view',
-      type: 'string',
       title: 'View Description',
-    },
-    {
+      type: 'string',
+    }),
+    defineField({
       name: 'desc',
-      type: 'string',
       title: 'Description',
-    },
-    {
-      name: 'live',
       type: 'string',
+    }),
+    defineField({
+      name: 'live',
       title: 'Live Link',
-    },
+      type: 'string',
+    }),
   ],
+  preview: {
+    select: {
+      title: 'name',
+      subtitle: 'view',
+      media: 'mainImage',
+    },
+  },
 })
